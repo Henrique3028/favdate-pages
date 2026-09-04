@@ -1,1 +1,13 @@
-# IG
+# Dependências e builds
+node_modules/
+dist/
+dist-ssr/
+.output/
+.vinxi/
+.tanstack/
+.nitro/
+.wrangler/
+*.local
+
+# Sistema
+.DS_Store

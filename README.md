@@ -1,22 +1,61 @@
 # FavDate — Pages
 
-Páginas institucionais públicas do FavDate hospedadas via **GitHub Pages**.
+Repositório unificado das páginas públicas do FavDate.
 
-## Páginas
+## Estrutura
 
-- [Índice](docs/index.html)
-- [Política de Privacidade](docs/privacidade.html)
-- [Termos de Uso](docs/termos.html)
-- [Exclusão de Conta](docs/exclusao-de-conta.html)
+```
+docs/       → Páginas legais estáticas (GitHub Pages)
+  index.html
+  privacidade.html
+  termos.html
+  exclusao-de-conta.html
+landing/    → Fonte da landing page (React + TanStack Start, SSR)
+  src/routes/index.tsx
+```
 
-## GitHub Pages
+## Páginas legais (GitHub Pages — estático)
 
-Publicado a partir da pasta `docs/` na branch `main`.
+Servidas a partir da pasta `docs/` na branch `main`.
 
-URL: `https://henrique3028.github.io/favdate-pages/`
+| Página | URL |
+|--------|-----|
+| Índice | `https://favdate.helpia.app.br/` |
+| Política de Privacidade | `https://favdate.helpia.app.br/privacidade.html` |
+| Termos de Uso | `https://favdate.helpia.app.br/termos.html` |
+| Exclusão de Conta | `https://favdate.helpia.app.br/exclusao-de-conta.html` |
 
-## Como atualizar o conteúdo
+Para atualizar: edite os arquivos em `docs/`, commit e push para `main`.
+O GitHub Pages publica automaticamente em ~1 minuto.
 
-1. Edite os arquivos em `docs/`.
-2. Commit e push para `main`.
-3. O GitHub Pages publica automaticamente em ~1 minuto.
+## Landing page (React/SSR — servidor Node/JS)
+
+A landing (`landing/`) é uma aplicação React (TanStack Start + Vite) que
+precisa rodar em um servidor Node/JS (não é estática). Ela deverá ser
+publicada no host JavaScript próprio (ex.: helpia) e servir a home
+`https://favdate.helpia.app.br/`.
+
+### Desenvolvimento local
+
+```sh
+cd landing
+npm install
+npm run dev
+```
+
+### Build
+
+```sh
+cd landing
+npm run build
+```
+
+### Links
+
+A landing referencia as páginas legais via links absolutos:
+- `https://favdate.helpia.app.br/privacidade.html`
+- `https://favdate.helpia.app.br/termos.html`
+- `https://favdate.helpia.app.br/exclusao-de-conta.html`
+
+> ⚠️ Os botões de download (App Store / Google Play) ainda apontam para `#download`
+> e devem ser preenchidos com as URLs reais das lojas quando o app for publicado.
