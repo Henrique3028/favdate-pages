@@ -4,15 +4,16 @@ Páginas institucionais públicas do FavDate hospedadas via **GitHub Pages**.
 
 ## Páginas
 
-- [Política de Privacidade](docs/privacy.html)
-- [Termos de Uso](docs/terms.html)
 - [Índice](docs/index.html)
+- [Política de Privacidade](docs/privacidade.html)
+- [Termos de Uso](docs/termos.html)
+- [Exclusão de Conta](docs/exclusao-de-conta.html)
 
 ## GitHub Pages
 
 Publicado a partir da pasta `docs/` na branch `main`.
 
-URL: `https://<org>.github.io/favdate-pages/`
+URL: `https://henrique3028.github.io/favdate-pages/`
 
 ## Como atualizar o conteúdo
 
