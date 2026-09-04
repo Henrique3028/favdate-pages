@@ -509,7 +509,7 @@ function Footer() {
         <div className="flex gap-5">
           <a href="https://favdate.helpia.app.br/privacidade.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Privacidade</a>
           <a href="https://favdate.helpia.app.br/termos.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Termos</a>
-          <a href="https://favdate.helpia.app.br/exclusao-de-conta.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Excluir Conta</a>
+          <a href="https://favdate.helpia.app.br/exclusao.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Excluir Conta</a>
         </div>
       </div>
     </footer>

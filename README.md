@@ -9,7 +9,7 @@ docs/       → Páginas legais estáticas (GitHub Pages)
   index.html
   privacidade.html
   termos.html
-  exclusao-de-conta.html
+  exclusao.html
 landing/    → Fonte da landing page (React + TanStack Start, SSR)
   src/routes/index.tsx
 ```
@@ -23,7 +23,7 @@ Servidas a partir da pasta `docs/` na branch `main`.
 | Índice | `https://favdate.helpia.app.br/` |
 | Política de Privacidade | `https://favdate.helpia.app.br/privacidade.html` |
 | Termos de Uso | `https://favdate.helpia.app.br/termos.html` |
-| Exclusão de Conta | `https://favdate.helpia.app.br/exclusao-de-conta.html` |
+| Exclusão de Conta | `https://favdate.helpia.app.br/exclusao.html` |
 
 Para atualizar: edite os arquivos em `docs/`, commit e push para `main`.
 O GitHub Pages publica automaticamente em ~1 minuto.
@@ -55,7 +55,7 @@ npm run build
 A landing referencia as páginas legais via links absolutos:
 - `https://favdate.helpia.app.br/privacidade.html`
 - `https://favdate.helpia.app.br/termos.html`
-- `https://favdate.helpia.app.br/exclusao-de-conta.html`
+- `https://favdate.helpia.app.br/exclusao.html`
 
 > ⚠️ Os botões de download (App Store / Google Play) ainda apontam para `#download`
 > e devem ser preenchidos com as URLs reais das lojas quando o app for publicado.
