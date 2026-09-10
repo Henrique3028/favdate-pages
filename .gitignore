@@ -11,3 +11,7 @@ dist-ssr/
 
 # Sistema
 .DS_Store
+
+# Logs do serviço NSSM
+service.log
+service.err.log
