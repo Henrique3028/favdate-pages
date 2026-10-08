@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
@@ -15,6 +16,9 @@ import {
   Wine,
   Mountain,
   Apple,
+  Megaphone,
+  Check,
+  Loader2,
 } from "lucide-react";
 import heroPhone from "@/assets/hero-phone.jpg";
 
@@ -50,6 +54,7 @@ function Index() {
       <HowItWorks />
       <Categories />
       <Testimonials />
+      <Advertise />
       <CTA />
       <Footer />
     </div>
@@ -81,6 +86,7 @@ function Nav() {
           <a href="#features" className="hover:text-foreground transition-colors">Recursos</a>
           <a href="#how" className="hover:text-foreground transition-colors">Como funciona</a>
           <a href="#categories" className="hover:text-foreground transition-colors">Lugares</a>
+          <a href="#anuncie" className="hover:text-foreground transition-colors">Anuncie</a>
           <a href="#download" className="hover:text-foreground transition-colors">Baixar</a>
         </nav>
         <a
@@ -446,6 +452,209 @@ function Testimonials() {
   );
 }
 
+const adPlans = [
+  {
+    name: "Basic",
+    price: "R$ 99",
+    features: ["Selo “Patrocinado” no card", "Presença no app FavDate"],
+  },
+  {
+    name: "Pro",
+    price: "R$ 249",
+    popular: true,
+    features: ["Tudo do Basic", "Destaque no feed de descoberta", "Cupom em destaque no card"],
+  },
+  {
+    name: "Premium",
+    price: "R$ 449",
+    features: ["Tudo do Pro", "Criativo próprio com imagem e link"],
+  },
+];
+
+const leadCategories = [
+  "Restaurantes",
+  "Bares",
+  "Cafés",
+  "Padarias",
+  "Academias",
+  "Salões",
+  "Mercados",
+  "Outro",
+];
+
+function Advertise() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    if (String(data.get("website") || "").trim() !== "") {
+      setStatus("success");
+      return;
+    }
+    const payload = {
+      contactName: String(data.get("contactName") || ""),
+      businessName: String(data.get("businessName") || "") || null,
+      whatsapp: String(data.get("whatsapp") || "") || null,
+      city: String(data.get("city") || "") || null,
+      categoryHint: String(data.get("categoryHint") || "") || null,
+      message: String(data.get("message") || "") || null,
+    };
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/v1/sponsorships/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const inputClass =
+    "w-full rounded-xl border border-border bg-background/60 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[oklch(0.66_0.21_12)]";
+
+  return (
+    <section id="anuncie" className="border-y border-border bg-secondary/40">
+      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <div className="max-w-2xl">
+          <span className="text-sm font-semibold uppercase tracking-wider text-[oklch(0.52_0.19_359)]">Para negócios</span>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold leading-tight">
+            Anuncie seu negócio no FavDate.
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Apareça para milhares de pessoas na sua cidade com selo “Patrocinado”, destaque no feed e cupom no card.
+          </p>
+        </div>
+
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {adPlans.map((p, i) => (
+            <motion.div
+              key={p.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className={`relative rounded-3xl border p-6 ${
+                p.popular ? "border-[oklch(0.66_0.21_12)] bg-card shadow-[var(--shadow-card)]" : "border-border bg-card"
+              }`}
+            >
+              {p.popular && (
+                <span className="absolute -top-3 left-6 rounded-full bg-[oklch(0.66_0.21_12)] px-3 py-0.5 text-xs font-semibold text-white">
+                  Mais popular
+                </span>
+              )}
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Megaphone className="h-4 w-4" />
+                <span className="text-sm font-semibold uppercase tracking-wider">{p.name}</span>
+              </div>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold">{p.price}</span>
+                <span className="text-muted-foreground text-sm">/mês</span>
+              </div>
+              <ul className="mt-4 space-y-2">
+                {p.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <Check className="h-4 w-4 mt-0.5 shrink-0 text-[oklch(0.66_0.21_12)]" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mt-10 rounded-3xl border border-border bg-card p-6 md:p-8"
+        >
+          {status === "success" ? (
+            <div className="py-8 text-center">
+              <div className="mx-auto grid h-12 w-12 place-items-center rounded-full text-white" style={{ background: "var(--gradient-coral)" }}>
+                <Check className="h-6 w-6" />
+              </div>
+              <p className="mt-4 text-lg font-semibold">Recebemos seu contato!</p>
+              <p className="mt-1 text-muted-foreground">Falamos com você pelo WhatsApp em breve.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
+              <div className="md:col-span-2 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="ad-contactName" className="mb-1.5 block text-sm font-medium">Seu nome *</label>
+                  <input id="ad-contactName" name="contactName" required maxLength={120} className={inputClass} placeholder="Como podemos te chamar" />
+                </div>
+                <div>
+                  <label htmlFor="ad-businessName" className="mb-1.5 block text-sm font-medium">Negócio</label>
+                  <input id="ad-businessName" name="businessName" maxLength={120} className={inputClass} placeholder="Nome do estabelecimento" />
+                </div>
+                <div>
+                  <label htmlFor="ad-whatsapp" className="mb-1.5 block text-sm font-medium">WhatsApp</label>
+                  <input id="ad-whatsapp" name="whatsapp" maxLength={20} className={inputClass} placeholder="(11) 99999-9999" />
+                </div>
+                <div>
+                  <label htmlFor="ad-city" className="mb-1.5 block text-sm font-medium">Cidade</label>
+                  <input id="ad-city" name="city" maxLength={80} className={inputClass} placeholder="Onde fica o negócio" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label htmlFor="ad-categoryHint" className="mb-1.5 block text-sm font-medium">Categoria</label>
+                  <select id="ad-categoryHint" name="categoryHint" defaultValue="" className={inputClass}>
+                    <option value="" disabled>Selecione a categoria</option>
+                    {leadCategories.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="md:col-span-2">
+                <label htmlFor="ad-message" className="mb-1.5 block text-sm font-medium">Mensagem</label>
+                <textarea id="ad-message" name="message" rows={3} maxLength={1000} className={inputClass} placeholder="Conte um pouco sobre o que você quer anunciar" />
+              </div>
+              {/* Honeypot anti-spam — invisível para humanos */}
+              <div className="hidden" aria-hidden>
+                <label htmlFor="ad-website">Website</label>
+                <input id="ad-website" name="website" tabIndex={-1} autoComplete="off" />
+              </div>
+              <div className="md:col-span-2 flex flex-wrap items-center gap-4">
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.03] disabled:opacity-60 disabled:hover:scale-100"
+                  style={{ background: "var(--gradient-coral)" }}
+                >
+                  {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Quero anunciar
+                </button>
+                {status === "error" && (
+                  <p className="text-sm text-muted-foreground">
+                    Não conseguimos enviar agora — tente novamente ou fale com{" "}
+                    <a href="mailto:suporte@favdate.com.br" className="underline text-foreground">suporte@favdate.com.br</a>.
+                  </p>
+                )}
+              </div>
+            </form>
+          )}
+        </motion.div>
+
+        <p className="mt-6 text-sm text-muted-foreground">
+          Planos mensais com renovação automática e no máximo 3 patrocinadores por categoria em cada cidade. Condições completas nos{" "}
+          <a href="https://favdate.com.br/termos.html" target="_blank" rel="noreferrer" className="underline text-foreground hover:text-foreground/80">
+            Termos de Uso
+          </a>{" "}
+          (seção “Anúncios e Conteúdo Patrocinado”).
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function CTA() {
   return (
     <section id="download" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
@@ -507,6 +716,7 @@ function Footer() {
         <Logo />
         <p>© {new Date().getFullYear()} FavDate. Feito com ❤ pra quem ama um bom rolê.</p>
         <div className="flex gap-5">
+          <a href="#anuncie" className="hover:text-foreground transition-colors">Anuncie</a>
           <a href="https://favdate.com.br/privacidade.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Privacidade</a>
           <a href="https://favdate.com.br/termos.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Termos</a>
           <a href="https://favdate.com.br/exclusao.html" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Excluir Conta</a>
