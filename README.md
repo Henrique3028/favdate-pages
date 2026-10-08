@@ -10,6 +10,8 @@ docs/       → Páginas legais estáticas
   privacidade.html
   termos.html
   exclusao.html
+  child_safety.html
+  TERMOS-ANUNCIO.md
 landing/    → Fonte da landing page (React + TanStack Start, SSR)
   src/routes/index.tsx
 ```
@@ -18,12 +20,18 @@ landing/    → Fonte da landing page (React + TanStack Start, SSR)
 
 Servidas a partir da pasta `docs/` no domínio `favdate.com.br`.
 
-| Página | URL |
-|--------|-----|
-| Índice | `https://favdate.com.br/` |
-| Política de Privacidade | `https://favdate.com.br/privacidade.html` |
-| Termos de Uso | `https://favdate.com.br/termos.html` |
-| Exclusão de Conta | `https://favdate.com.br/exclusao.html` |
+| Página | URL | Versão |
+|--------|-----|--------|
+| Índice (com seção "Anuncie no FavDate" e formulário de leads de anunciantes) | `https://favdate.com.br/` | — |
+| Política de Privacidade | `https://favdate.com.br/privacidade.html` | 1.3 — 08/10/2026 |
+| Termos de Uso (inclui seção 18 — Anúncios e Conteúdo Patrocinado) | `https://favdate.com.br/termos.html` | 1.3 — 08/10/2026 |
+| Exclusão de Conta | `https://favdate.com.br/exclusao.html` | — |
+| Segurança Infantil | `https://favdate.com.br/child_safety.html` | — |
+| Contrato de Anúncio (Markdown) | `https://favdate.com.br/TERMOS-ANUNCIO.md` | 1.0 — 08/10/2026 |
+
+O formulário de anúncios do `docs/index.html` envia os leads para
+`POST https://favdate.com.br/api/v1/sponsorships/leads` (backend público, CORS
+wildcard, honeypot no campo `website`).
 
 Para atualizar: edite os arquivos em `docs/`, commit e push para `main`.
 

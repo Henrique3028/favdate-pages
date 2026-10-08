@@ -22,6 +22,29 @@
   .links{margin-top:40px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
   .btn{display:inline-block;background:var(--card);border:1px solid var(--border);color:#fff;text-decoration:none;padding:12px 24px;border-radius:999px;font-weight:600}
   .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .ads{margin-top:56px;padding-top:48px;border-top:1px solid var(--border)}
+  .ads h2{color:#fff;font-size:1.6em;margin:0 0 8px}
+  .ads-sub{color:var(--muted);font-size:1em;max-width:520px;margin:0 auto}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px auto 40px;text-align:left}
+  .plan{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .plan h3{margin:0;color:#fff;font-size:1em}
+  .plan .price{color:var(--accent);font-weight:700;font-size:1.5em;margin:8px 0 12px}
+  .plan .price span{font-size:.5em;color:var(--muted);font-weight:500}
+  .plan ul{margin:0;padding-left:18px}
+  .plan li{color:var(--muted);font-size:.9em;margin:6px 0}
+  .lead-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:480px;margin:0 auto;text-align:left}
+  .lead-form label{display:block;color:var(--muted);font-size:.85em;font-weight:600;margin:0 0 6px}
+  .lead-form .field{margin-bottom:16px}
+  .lead-form input,.lead-form select,.lead-form textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit;font-size:.95em;padding:10px 12px}
+  .lead-form input:focus,.lead-form select:focus,.lead-form textarea:focus{outline:none;border-color:var(--accent)}
+  .lead-form textarea{resize:vertical;min-height:90px}
+  .btn-submit{display:block;width:100%;background:var(--accent);border:1px solid var(--accent);color:#fff;padding:12px 24px;border-radius:999px;font-family:inherit;font-size:1em;font-weight:600;cursor:pointer}
+  .btn-submit:hover{filter:brightness(1.1)}
+  .btn-submit:disabled{opacity:.6;cursor:default}
+  .form-err{color:var(--accent);font-size:.9em;margin:12px 0}
+  .form-err a{color:var(--accent)}
+  .form-ok{background:rgba(249,75,86,.1);border:1px solid var(--accent);color:#fff;border-radius:12px;padding:24px;margin:0}
+  @media (max-width:640px){.plans{grid-template-columns:1fr}}
   footer{max-width:760px;margin:0 auto;padding:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85em;text-align:center}
   footer a{color:var(--accent);text-decoration:none}
 </style>
@@ -46,9 +69,128 @@
     <a class="btn" href="exclusao.html">Excluir Conta</a>
     <a class="btn" href="child_safety.html">Segurança Infantil</a>
   </div>
+
+  <section class="ads">
+    <h2>Anuncie seu negócio no FavDate</h2>
+    <p class="ads-sub">Apareça para milhares de pessoas na sua cidade com selo "Patrocinado", destaque no feed e cupom no card.</p>
+
+    <div class="plans">
+      <div class="plan">
+        <h3>Basic</h3>
+        <p class="price">R$ 99<span>/mês</span></p>
+        <ul>
+          <li>Selo Patrocinado</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>Pro</h3>
+        <p class="price">R$ 249<span>/mês</span></p>
+        <ul>
+          <li>Selo Patrocinado</li>
+          <li>Destaque no feed</li>
+          <li>Cupom em destaque</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>Premium</h3>
+        <p class="price">R$ 449<span>/mês</span></p>
+        <ul>
+          <li>Tudo dos planos anteriores</li>
+          <li>Criativo próprio com imagem e link</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lead-box" id="lead-box">
+      <form class="lead-form" id="lead-form" novalidate>
+        <div class="field">
+          <label for="contactName">Nome*</label>
+          <input type="text" id="contactName" name="contactName" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="businessName">Negócio</label>
+          <input type="text" id="businessName" name="businessName" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="city">Cidade</label>
+          <input type="text" id="city" name="city" autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label for="categoryHint">Categoria</label>
+          <select id="categoryHint" name="categoryHint">
+            <option value="">Selecione uma categoria</option>
+            <option value="Restaurantes">Restaurantes</option>
+            <option value="Bares">Bares</option>
+            <option value="Cafés">Cafés</option>
+            <option value="Padarias">Padarias</option>
+            <option value="Academias">Academias</option>
+            <option value="Salões">Salões</option>
+            <option value="Mercados">Mercados</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Mensagem</label>
+          <textarea id="message" name="message" rows="4"></textarea>
+        </div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div class="form-err" id="lead-error" hidden></div>
+        <button class="btn-submit" type="submit" id="lead-submit">Quero anunciar</button>
+      </form>
+    </div>
+  </section>
 </main>
 <footer>
   FavDate © 2026 — <a href="privacidade.html">Política de Privacidade</a> · <a href="termos.html">Termos de Uso</a> · <a href="exclusao.html">Excluir Conta</a> · <a href="child_safety.html">Segurança Infantil</a>
 </footer>
+<script>
+(function(){
+  var form=document.getElementById('lead-form');
+  var box=document.getElementById('lead-box');
+  if(!form||!box)return;
+  var err=document.getElementById('lead-error');
+  var btn=document.getElementById('lead-submit');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    err.hidden=true;
+    var contactName=form.contactName.value.trim();
+    if(!contactName){
+      err.textContent='Informe o seu nome para continuar.';
+      err.hidden=false;
+      form.contactName.focus();
+      return;
+    }
+    if(form.website.value){
+      box.innerHTML='<p class="form-ok">Recebemos seu contato! Falamos com você pelo WhatsApp em breve.</p>';
+      return;
+    }
+    var data={contactName:contactName};
+    var fields=['businessName','whatsapp','city','categoryHint','message'];
+    for(var i=0;i<fields.length;i++){
+      var value=form[fields[i]].value.trim();
+      if(value)data[fields[i]]=value;
+    }
+    btn.disabled=true;
+    btn.textContent='Enviando...';
+    fetch('https://favdate.com.br/api/v1/sponsorships/leads',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    }).then(function(res){
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      box.innerHTML='<p class="form-ok">Recebemos seu contato! Falamos com você pelo WhatsApp em breve.</p>';
+    }).catch(function(){
+      btn.disabled=false;
+      btn.textContent='Quero anunciar';
+      err.innerHTML='Não foi possível enviar agora. Tente novamente ou fale conosco pelo e-mail <a href="mailto:suporte@favdate.com.br">suporte@favdate.com.br</a>.';
+      err.hidden=false;
+    });
+  });
+})();
+</script>
 </body>
 </html>
