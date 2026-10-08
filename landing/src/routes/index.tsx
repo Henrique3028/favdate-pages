@@ -455,18 +455,15 @@ function Testimonials() {
 const adPlans = [
   {
     name: "Basic",
-    price: "R$ 99",
     features: ["Selo “Patrocinado” no card", "Presença no app FavDate"],
   },
   {
     name: "Pro",
-    price: "R$ 249",
     popular: true,
     features: ["Tudo do Basic", "Destaque no feed de descoberta", "Cupom em destaque no card"],
   },
   {
     name: "Premium",
-    price: "R$ 449",
     features: ["Tudo do Pro", "Criativo próprio com imagem e link"],
   },
 ];
@@ -534,7 +531,7 @@ function Advertise() {
             Anuncie seu negócio no FavDate.
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Apareça para milhares de pessoas na sua cidade com selo “Patrocinado”, destaque no feed e cupom no card.
+            Apareça para milhares de pessoas na sua cidade com selo “Patrocinado”, destaque no feed e cupom no card. Valores personalizados conforme período e região — fale com a gente.
           </p>
         </div>
 
@@ -559,9 +556,8 @@ function Advertise() {
                 <Megaphone className="h-4 w-4" />
                 <span className="text-sm font-semibold uppercase tracking-wider">{p.name}</span>
               </div>
-              <div className="mt-3 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-bold">{p.price}</span>
-                <span className="text-muted-foreground text-sm">/mês</span>
+              <div className="mt-3">
+                <span className="font-display text-2xl font-bold text-muted-foreground">Sob consulta</span>
               </div>
               <ul className="mt-4 space-y-2">
                 {p.features.map((f) => (

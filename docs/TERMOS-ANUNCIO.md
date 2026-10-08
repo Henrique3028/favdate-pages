@@ -22,7 +22,7 @@ na seção 2, durante o período de veiculação contratado.
 
 2.1. Estão disponíveis os seguintes planos mensais:
 
-| Entregável | Basic — R$ 99/mês | Pro — R$ 249/mês | Premium — R$ 449/mês |
+| Entregável | Basic | Pro | Premium |
 |---|---|---|---|
 | Selo "Patrocinado" no card do lugar | Sim | Sim | Sim |
 | Destaque no feed | Não | Sim | Sim |
@@ -72,8 +72,9 @@ sem garantia de volume mínimo de impressões, conversões, acessos ou faturamen
 
 ## 6. Preços, pagamento e ativação
 
-6.1. Os preços vigentes são os indicados na seção 2, sujeitos a alteração para
-contratos futuros, com aviso prévio ao Anunciante.
+6.1. O valor do patrocínio é definido em proposta comercial enviada pelo FavDate ao
+Anunciante, podendo variar conforme plano, período, região e escopo negociado. O
+valor contratado é o indicado na cobrança gerada pelo FavDate.
 
 6.2. O pagamento é processado por provedor de serviços de pagamento (PSP) mediante
 **boleto ou Pix**, com cobrança recorrente mensal pelo valor do plano contratado.
