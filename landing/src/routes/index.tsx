@@ -484,6 +484,7 @@ const leadCategories = [
 
 function Advertise() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorDetail, setErrorDetail] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -493,6 +494,12 @@ function Advertise() {
       setStatus("success");
       return;
     }
+    const waDigits = String(data.get("whatsapp") || "").replace(/\D/g, "");
+    if (waDigits.length < 8 || waDigits.length > 15) {
+      setErrorDetail("Informe o WhatsApp com DDD para continuar.");
+      return;
+    }
+    setErrorDetail("");
     const payload = {
       contactName: String(data.get("contactName") || ""),
       businessName: String(data.get("businessName") || "") || null,
@@ -515,7 +522,6 @@ function Advertise() {
       setStatus("error");
     }
   }
-
   const inputClass =
     "w-full rounded-xl border border-border bg-background/60 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[oklch(0.66_0.21_12)]";
 
@@ -596,8 +602,8 @@ function Advertise() {
                   <input id="ad-businessName" name="businessName" maxLength={120} className={inputClass} placeholder="Nome do estabelecimento" />
                 </div>
                 <div>
-                  <label htmlFor="ad-whatsapp" className="mb-1.5 block text-sm font-medium">WhatsApp</label>
-                  <input id="ad-whatsapp" name="whatsapp" maxLength={20} className={inputClass} placeholder="(11) 99999-9999" />
+                  <label htmlFor="ad-whatsapp" className="mb-1.5 block text-sm font-medium">WhatsApp *</label>
+                  <input id="ad-whatsapp" name="whatsapp" required maxLength={20} className={inputClass} placeholder="(11) 99999-9999" />
                 </div>
                 <div>
                   <label htmlFor="ad-city" className="mb-1.5 block text-sm font-medium">Cidade</label>
@@ -632,7 +638,10 @@ function Advertise() {
                   {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
                   Quero anunciar
                 </button>
-                {status === "error" && (
+                {errorDetail && (
+                  <p className="text-sm font-medium text-[oklch(0.55_0.2_25)]">{errorDetail}</p>
+                )}
+                {status === "error" && !errorDetail && (
                   <p className="text-sm text-muted-foreground">
                     Não conseguimos enviar agora — tente novamente ou fale com{" "}
                     <a href="mailto:suporte@favdate.com.br" className="underline text-foreground">suporte@favdate.com.br</a>.

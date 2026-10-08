@@ -112,7 +112,7 @@
           <input type="text" id="businessName" name="businessName" autocomplete="organization">
         </div>
         <div class="field">
-          <label for="whatsapp">WhatsApp</label>
+          <label for="whatsapp">WhatsApp*</label>
           <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel">
         </div>
         <div class="field">
@@ -162,6 +162,13 @@
       err.textContent='Informe o seu nome para continuar.';
       err.hidden=false;
       form.contactName.focus();
+      return;
+    }
+    var waDigits=form.whatsapp.value.replace(/\D/g,'');
+    if(waDigits.length<8||waDigits.length>15){
+      err.textContent='Informe o WhatsApp com DDD para continuar.';
+      err.hidden=false;
+      form.whatsapp.focus();
       return;
     }
     if(form.website.value){
