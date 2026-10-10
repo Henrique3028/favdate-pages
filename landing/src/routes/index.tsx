@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
@@ -12,15 +12,57 @@ import {
   Star,
   ArrowRight,
   Smartphone,
-  Coffee,
   Wine,
-  Mountain,
   Apple,
   Megaphone,
   Check,
   Loader2,
+  Utensils,
+  Trees,
+  Film,
+  Landmark,
+  Drama,
+  ShoppingBag,
+  Dumbbell,
+  Waves,
+  BedDouble,
 } from "lucide-react";
 import heroPhone from "@/assets/hero-phone.jpg";
+
+type CategoryCount = { category: string; count: number };
+type PublicStats = { totalPlaces: number; placesByCategory: CategoryCount[] };
+
+/**
+ * Busca os números reais do catálogo no backend. Enquanto não chega (ou se
+ * falhar), devolve null e o componente usa um texto neutro — nunca inventa
+ * métricas.
+ */
+function usePublicStats() {
+  const [stats, setStats] = useState<PublicStats | null>(null);
+  useEffect(() => {
+    let active = true;
+    fetch("/api/v1/public/stats")
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data: PublicStats) => {
+        if (active) setStats(data);
+      })
+      .catch(() => {
+        if (active) setStats(null);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+  return stats;
+}
+
+/** Arredonda o total para milhar cheio (2029 → "+2.000"). */
+function formatPlaces(n: number) {
+  if (n >= 1000) {
+    return `+${(Math.floor(n / 1000) * 1000).toLocaleString("pt-BR")}`;
+  }
+  return n.toLocaleString("pt-BR");
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,7 +91,6 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Nav />
       <Hero />
-      <SocialProof />
       <Features />
       <HowItWorks />
       <Categories />
@@ -102,6 +143,7 @@ function Nav() {
 }
 
 function Hero() {
+  const stats = usePublicStats();
   return (
     <section className="relative isolate overflow-hidden">
       {/* Background glow */}
@@ -162,12 +204,11 @@ function Hero() {
                 />
               ))}
             </div>
-            <div>
-              <div className="flex items-center gap-1 text-foreground font-semibold">
-                <Star className="h-4 w-4 fill-[oklch(0.82_0.16_85)] text-[oklch(0.82_0.16_85)]" /> 4.9
-              </div>
-              <span>+50 mil amigos já matcharam</span>
-            </div>
+            <span>
+              {stats
+                ? `${formatPlaces(stats.totalPlaces)} lugares pra descobrir`
+                : "Milhares de lugares pra descobrir"}
+            </span>
           </div>
         </motion.div>
 
@@ -217,22 +258,6 @@ function Hero() {
             </div>
           </motion.div>
         </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function SocialProof() {
-  const items = ["TechCrunch", "VEJA", "Folha", "Exame", "GQ", "Time Out"];
-  return (
-    <section className="border-y border-border bg-secondary/40">
-      <div className="mx-auto max-w-6xl px-6 py-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm text-muted-foreground">
-        <span className="font-medium">Visto em</span>
-        {items.map((i) => (
-          <span key={i} className="font-display font-semibold tracking-wide opacity-70 hover:opacity-100 transition-opacity">
-            {i}
-          </span>
-        ))}
       </div>
     </section>
   );
@@ -359,13 +384,38 @@ function HowItWorks() {
   );
 }
 
+const CATEGORY_META: Record<string, { label: string; icon: typeof Utensils }> = {
+  RESTAURANTES: { label: "Restaurantes", icon: Utensils },
+  PARQUES: { label: "Parques", icon: Trees },
+  BARES: { label: "Bares & rooftops", icon: Wine },
+  CINEMAS: { label: "Cinemas", icon: Film },
+  MUSEUS: { label: "Museus", icon: Landmark },
+  TEATROS: { label: "Teatros", icon: Drama },
+  SHOPPINGS: { label: "Shoppings", icon: ShoppingBag },
+  ACADEMIAS: { label: "Academias", icon: Dumbbell },
+  PRAIAS: { label: "Praias", icon: Waves },
+  HOTEIS: { label: "Hotéis", icon: BedDouble },
+};
+
+// Exibido apenas enquanto os números reais não chegam — sem contagem, para
+// não inventar métricas.
+const FALLBACK_CATEGORIES = [
+  { label: "Restaurantes", icon: Utensils, count: "" },
+  { label: "Bares & rooftops", icon: Wine, count: "" },
+  { label: "Parques", icon: Trees, count: "" },
+  { label: "Cinemas", icon: Film, count: "" },
+];
+
 function Categories() {
-  const cats = [
-    { icon: Coffee, label: "Cafés aconchegantes", count: "1.2k lugares" },
-    { icon: Wine, label: "Bares & rooftops", count: "860 lugares" },
-    { icon: Mountain, label: "Aventura ao ar livre", count: "540 trilhas" },
-    { icon: Sparkles, label: "Vida noturna", count: "320 spots" },
-  ];
+  const stats = usePublicStats();
+  const cats = (stats?.placesByCategory ?? [])
+    .filter((c) => CATEGORY_META[c.category])
+    .slice(0, 8)
+    .map((c) => ({
+      ...CATEGORY_META[c.category],
+      count: `${c.count.toLocaleString("pt-BR")} lugares`,
+    }));
+  const displayed = cats.length > 0 ? cats : FALLBACK_CATEGORIES;
   return (
     <section id="categories" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <div className="flex flex-wrap items-end justify-between gap-6">
@@ -376,11 +426,13 @@ function Categories() {
           </h2>
         </div>
         <p className="text-muted-foreground max-w-md">
-          Do café da manhã às madrugadas, são milhares de lugares curados — atualizados toda semana.
+          {stats
+            ? `São ${stats.totalPlaces.toLocaleString("pt-BR")} lugares catalogados — atualizados toda semana.`
+            : "São milhares de lugares catalogados — atualizados toda semana."}
         </p>
       </div>
       <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {cats.map((c, i) => (
+        {displayed.map((c, i) => (
           <motion.div
             key={c.label}
             initial={{ opacity: 0, y: 20 }}
@@ -395,7 +447,7 @@ function Categories() {
             <c.icon className="h-7 w-7 opacity-90" />
             <div>
               <h3 className="text-xl font-semibold">{c.label}</h3>
-              <p className="text-sm opacity-80 mt-1">{c.count}</p>
+              {c.count ? <p className="text-sm opacity-80 mt-1">{c.count}</p> : null}
             </div>
           </motion.div>
         ))}
