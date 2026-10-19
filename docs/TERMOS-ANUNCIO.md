@@ -8,7 +8,7 @@ os [Termos de Uso](termos.html) (seção 18 — Anúncios e Conteúdo Patrocinad
 [Política de Privacidade](privacidade.html) (item 2.6 — Dados de anunciantes), que
 fazem parte integrante deste documento.
 
-Para qualquer dúvida, entre em contato pelo e-mail **suporte@favdate.com.br**.
+Para qualquer dúvida, entre em contato pelo e-mail **contato@favdate.com.br**.
 
 ## 1. Objeto
 
@@ -150,4 +150,4 @@ sem prejuízo de outros foros legalmente aplicáveis.
 ## 13. Contato
 
 Dúvidas, cancelamentos ou solicitações relacionadas a este Contrato de Anúncio:
-**suporte@favdate.com.br**.
+**contato@favdate.com.br**.

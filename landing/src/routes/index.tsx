@@ -692,7 +692,7 @@ function Advertise() {
                 {status === "error" && !errorDetail && (
                   <p className="text-sm text-muted-foreground">
                     Não conseguimos enviar agora — tente novamente ou fale com{" "}
-                    <a href="mailto:suporte@favdate.com.br" className="underline text-foreground">suporte@favdate.com.br</a>.
+                    <a href="mailto:contato@favdate.com.br" className="underline text-foreground">contato@favdate.com.br</a>.
                   </p>
                 )}
               </div>
