@@ -752,8 +752,8 @@ function CTA() {
 >
                 <Smartphone className="h-6 w-6" />
                 <span className="text-left">
-                  <span className="block text-[10px] uppercase tracking-wider opacity-80">Disponível no</span>
-                  <span className="block text-base font-semibold leading-tight">Google Play</span>
+                  <span className="block text-[10px] uppercase tracking-wider opacity-80">Baixe na</span>
+                  <span className="block text-base font-semibold leading-tight">Play Store</span>
                 </span>
               </a>
             </div>
