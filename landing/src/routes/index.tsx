@@ -735,18 +735,21 @@ function CTA() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#"
-                className="inline-flex items-center gap-3 rounded-2xl bg-black/90 backdrop-blur px-5 py-3 text-white hover:bg-black transition-colors"
+                aria-disabled="true"
+                className="inline-flex items-center gap-3 rounded-2xl bg-black/90 backdrop-blur px-5 py-3 text-white/60 cursor-not-allowed transition-colors"
               >
                 <Apple className="h-6 w-6" />
                 <span className="text-left">
-                  <span className="block text-[10px] uppercase tracking-wider opacity-80">Baixe na</span>
+                  <span className="block text-[10px] uppercase tracking-wider opacity-80">Em breve na</span>
                   <span className="block text-base font-semibold leading-tight">App Store</span>
                 </span>
               </a>
               <a
-                href="#"
+                href="https://play.google.com/store/apps/details?id=com.favdate.app"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-3 rounded-2xl bg-black/90 backdrop-blur px-5 py-3 text-white hover:bg-black transition-colors"
-              >
+>
                 <Smartphone className="h-6 w-6" />
                 <span className="text-left">
                   <span className="block text-[10px] uppercase tracking-wider opacity-80">Disponível no</span>
